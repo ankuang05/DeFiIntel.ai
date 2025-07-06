@@ -3,16 +3,26 @@
 **DeFiIntel.ai** is an open-source, modular analytics and intelligence platform for detecting fraud, scams, and suspicious activity in the cryptocurrency and DeFi space. It leverages on-chain data, social sentiment, and machine learning to help users, researchers, and developers analyze memecoins, wallets, and token launches across multiple blockchains.
 
 ## Features
-- Fetches and aggregates data from:
-  - Solana (Helius API)
-  - Ethereum (Etherscan API)
-  - GeckoTerminal (Solana token stats)
-  - Twitter (social sentiment)
+- **Multi-Source Data Integration:**
+  - Solana (Helius API) - Wallet transactions and behavior
+  - Ethereum (Etherscan API) - Token transfers and patterns
+  - GeckoTerminal (Solana token stats) - Price and market data
+  - Twitter (social sentiment) - Social media analysis
   - (Planned) RugDoc and other scam label sources
-- Modular API wrappers for easy extension
-- Ready for EDA, feature engineering, and ML modeling
-- Designed for integration with LLMs and chatbot agents
-- (Planned) Streamlit/FastAPI dashboard for interactive analysis
+- **Fraud Detection Engine:**
+  - Wallet behavior analysis (rapid transactions, night activity, fee patterns)
+  - Token transfer analysis (value concentration, address diversity, temporal patterns)
+  - Social sentiment analysis (manipulation detection, volume analysis)
+  - Heuristic-based detection (rule-based fraud indicators)
+  - Machine learning models (Random Forest, Isolation Forest)
+- **Feature Engineering:**
+  - Automated feature extraction from transaction data
+  - Risk scoring algorithms
+  - Behavioral pattern recognition
+- **Modular Architecture:**
+  - Reusable API wrappers
+  - Extensible detection methods
+  - Ready for dashboard and AI agent integration
 
 ## Project Structure
 ```
@@ -66,8 +76,8 @@ defiintel-ai/
 
 ## Roadmap
 - [x] Phase 1: Project setup & API integration
-- [ ] Phase 2: Exploratory Data Analysis (EDA) & feature engineering
-- [ ] Phase 3: Scam/fraud detection logic (heuristics & ML)
+- [x] Phase 2: Exploratory Data Analysis (EDA) & feature engineering
+- [x] Phase 3: Scam/fraud detection logic (heuristics & ML)
 - [ ] Phase 4: Streamlit/FastAPI dashboard
 - [ ] Phase 5: LLM-powered chatbot/agent
 - [ ] Phase 6: Documentation, deployment, and demo
