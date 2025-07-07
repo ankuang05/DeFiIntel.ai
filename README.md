@@ -23,6 +23,11 @@
   - Reusable API wrappers
   - Extensible detection methods
   - Ready for dashboard and AI agent integration
+- **Interactive Dashboard:**
+  - Streamlit web interface for real-time analysis
+  - Interactive visualizations with Plotly
+  - Multi-page navigation (wallet, token, sentiment, ML)
+  - Risk scoring and pattern detection visualization
 
 ## Project Structure
 ```
@@ -71,14 +76,23 @@ defiintel-ai/
   ```sh
   python test_api.py
   ```
+- Run the interactive dashboard:
+  ```sh
+  pip install -r app/requirements.txt
+  python app/run_dashboard.py
+  ```
 - Explore and analyze data in Jupyter notebooks (see `notebooks/`)
+- Test fraud detection pipeline:
+  ```sh
+  python test_fraud_detection.py
+  ```
 - Extend with new APIs, features, or models as needed
 
 ## Roadmap
 - [x] Phase 1: Project setup & API integration
 - [x] Phase 2: Exploratory Data Analysis (EDA) & feature engineering
 - [x] Phase 3: Scam/fraud detection logic (heuristics & ML)
-- [ ] Phase 4: Streamlit/FastAPI dashboard
+- [x] Phase 4: Streamlit/FastAPI dashboard
 - [ ] Phase 5: LLM-powered chatbot/agent
 - [ ] Phase 6: Documentation, deployment, and demo
 
