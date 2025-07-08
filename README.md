@@ -28,11 +28,6 @@
   - Interactive visualizations with Plotly
   - Multi-page navigation (wallet, token, sentiment, ML)
   - Risk scoring and pattern detection visualization
-- **AI Agent (Planned):**
-  - LLM-powered DeFi intelligence agent
-  - Natural language queries about wallets/tokens
-  - Automated risk assessment summaries
-  - On-chain analysis explanations
 
 ## Project Structure
 ```
