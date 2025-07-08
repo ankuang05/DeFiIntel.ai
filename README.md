@@ -28,6 +28,11 @@
   - Interactive visualizations with Plotly
   - Multi-page navigation (wallet, token, sentiment, ML)
   - Risk scoring and pattern detection visualization
+- **AI Agent (Planned):**
+  - LLM-powered DeFi intelligence agent
+  - Natural language queries about wallets/tokens
+  - Automated risk assessment summaries
+  - On-chain analysis explanations
 
 ## Project Structure
 ```
@@ -36,8 +41,9 @@ defiintel-ai/
 │   ├── api/           # API wrappers (helius, etherscan, coingecko, etc.)
 │   ├── features/       # Feature engineering scripts
 │   ├── models/         # ML models and heuristics
+│   ├── agent/          # AI agent (planned for future release)
 │   └── utils/          # Config and helpers
-├── app/                # (Planned) Streamlit/FastAPI frontend
+├── app/                # Streamlit/FastAPI frontend
 ├── data/               # Datasets (not tracked by git)
 ├── notebooks/          # Jupyter notebooks for EDA and prototyping
 ├── test_api.py         # Script to test all API integrations
@@ -93,9 +99,12 @@ defiintel-ai/
 - [x] Phase 2: Exploratory Data Analysis (EDA) & feature engineering
 - [x] Phase 3: Scam/fraud detection logic (heuristics & ML)
 - [x] Phase 4: Streamlit/FastAPI dashboard
-- [ ] Phase 5: LLM-powered chatbot/agent
+- [ ] Phase 5: LLM-powered chatbot/agent (planned for future release)
 - [ ] Phase 6: Documentation, deployment, and demo
 
 ## Contributing
 Pull requests and suggestions are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## AI Agent Status
+The LLM-powered DeFi intelligence agent is planned for a future release. Public LLM APIs require payment for production use, making it infeasible for an open-source project to provide free access to all users. The current focus is on the powerful fraud detection features that are already working and ready for public use.
 

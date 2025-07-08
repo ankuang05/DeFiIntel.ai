@@ -8,6 +8,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import json
+import numpy as np
+import base64
 
 from src.api.helius_api import get_wallet_transactions
 from src.api.coingecko_api import get_token_data_solana
@@ -17,6 +19,7 @@ from src.features.wallet_features import extract_wallet_features
 from src.features.token_features import extract_token_features
 from src.models.fraud_detector import FraudDetector
 from src.models.ml_detector import MLFraudDetector
+from src.agent.llm_agent import LLMDeFiAgent
 
 # Page configuration
 st.set_page_config(
@@ -26,30 +29,162 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
-st.markdown("""
-<style>
-    .main-header {
+# Custom CSS for minimal, modern, dark theme
+st.markdown(
+    """
+    <style>
+    body, .stApp {
+        background: #181A20 !important;
+        color: #E6E6E6 !important;
+        font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
+    }
+    .main-title {
         font-size: 3rem;
-        font-weight: bold;
-        color: #1f77b4;
-        text-align: center;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: #F3F6FB;
+        margin-bottom: 0.5rem;
+    }
+    .subtitle {
+        font-size: 1.3rem;
+        color: #A3B3C2;
         margin-bottom: 2rem;
     }
-    .metric-card {
-        background-color: #f0f2f6;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-left: 4px solid #1f77b4;
+    .get-started-btn {
+        background: linear-gradient(90deg, #5A5DF0 0%, #3ED6B7 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.9rem 2.2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 2.5rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        box-shadow: 0 2px 16px 0 rgba(90,93,240,0.12);
     }
-    .risk-high { color: #d62728; }
-    .risk-medium { color: #ff7f0e; }
-    .risk-low { color: #2ca02c; }
-    .sidebar .sidebar-content {
-        background-color: #f8f9fa;
+    .get-started-btn:hover {
+        background: linear-gradient(90deg, #3ED6B7 0%, #5A5DF0 100%);
     }
-</style>
-""", unsafe_allow_html=True)
+    .feature-section {
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+    .feature-card {
+        background: #23262F;
+        border-radius: 14px;
+        padding: 1.5rem 1.2rem;
+        margin: 0.5rem;
+        box-shadow: 0 2px 12px 0 rgba(30,34,40,0.10);
+        min-width: 220px;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .feature-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #F3F6FB;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+        color: #A3B3C2;
+        font-size: 0.98rem;
+        text-align: center;
+    }
+    .product-img {
+        border-radius: 10px;
+        box-shadow: 0 2px 12px 0 rgba(30,34,40,0.13);
+        margin-bottom: 1.2rem;
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        background: #23262F;
+    }
+    .how-section {
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+def scroll_to_product_tour():
+    st.markdown("<script>window.location.hash = '#product-tour';</script>", unsafe_allow_html=True)
+
+# --- HERO SECTION ---
+st.markdown('<div style="text-align:center;">', unsafe_allow_html=True)
+st.markdown('<div class="main-title">DeFiIntel.ai</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">A modern, open-source dashboard for DeFi fraud detection, wallet & token analytics, and social sentiment. Minimal, powerful, and easy to use.</div>', unsafe_allow_html=True)
+if st.button('Get Started', key='get_started', help="See how it works", use_container_width=False):
+    scroll_to_product_tour()
+st.markdown('</div>', unsafe_allow_html=True)
+
+# --- PRODUCT TOUR SECTION ---
+st.markdown('<div id="product-tour"></div>', unsafe_allow_html=True)
+st.markdown('<div class="how-section"><h2 style="color:#F3F6FB; text-align:center; font-size:2rem; font-weight:600;">Product Tour</h2></div>', unsafe_allow_html=True)
+
+# Placeholder images (replace with real screenshots later)
+wallet_img = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80"
+token_img = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80"
+social_img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+ml_img = "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80"
+
+# --- Feature Cards ---
+col1, col2 = st.columns(2, gap="large")
+
+with col1:
+    st.image(wallet_img, caption="Wallet Analysis", use_column_width=True, output_format="auto")
+    st.markdown('<div class="feature-title">Wallet Analysis</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-desc">Analyze wallet behavior, transaction patterns, and risk scores. Detect suspicious activity and visualize wallet flows.</div>', unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.image(token_img, caption="Token Analysis", use_column_width=True, output_format="auto")
+    st.markdown('<div class="feature-title">Token Analysis</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-desc">Explore token transfers, concentration, and risk. Identify potential rug pulls and pump-and-dump schemes.</div>', unsafe_allow_html=True)
+
+with col2:
+    st.image(social_img, caption="Social Sentiment", use_column_width=True, output_format="auto")
+    st.markdown('<div class="feature-title">Social Sentiment</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-desc">Monitor Twitter sentiment and social volume for tokens and wallets. Spot manipulation and trending topics.</div>', unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.image(ml_img, caption="ML Fraud Detection", use_column_width=True, output_format="auto")
+    st.markdown('<div class="feature-title">ML Fraud Detection</div>', unsafe_allow_html=True)
+    st.markdown('<div class="feature-desc">Leverage machine learning to detect fraud and anomalies. Get risk predictions and explanations for each case.</div>', unsafe_allow_html=True)
+
+# --- Feature Grid ---
+st.markdown('<div class="feature-section"><h3 style="color:#F3F6FB; text-align:center; font-size:1.3rem; font-weight:600;">Key Features</h3></div>', unsafe_allow_html=True)
+
+feature_grid = [
+    {"title": "Multi-Chain Support", "desc": "Analyze Solana and Ethereum wallets and tokens."},
+    {"title": "Real-Time Analytics", "desc": "Live data from Helius, Etherscan, GeckoTerminal, and Twitter."},
+    {"title": "Risk Scoring", "desc": "Automated risk scores for wallets and tokens."},
+    {"title": "Modular Design", "desc": "Easily extend with new APIs and detection methods."},
+    {"title": "Interactive Visualizations", "desc": "Clear, actionable charts and tables."},
+    {"title": "Open Source", "desc": "Transparent, community-driven, and extensible."},
+]
+
+cols = st.columns(3)
+for i, feat in enumerate(feature_grid):
+    with cols[i % 3]:
+        st.markdown(f'<div class="feature-card"><div class="feature-title">{feat["title"]}</div><div class="feature-desc">{feat["desc"]}</div></div>', unsafe_allow_html=True)
+
+# --- How to Use Section ---
+st.markdown('<div class="how-section"><h2 style="color:#F3F6FB; text-align:center; font-size:2rem; font-weight:600;">How to Use</h2></div>', unsafe_allow_html=True)
+st.markdown("""
+1. **Connect your wallet or enter a wallet address** to analyze its behavior and risk.
+2. **Search for a token** to view transfer patterns, concentration, and risk signals.
+3. **Check social sentiment** for trending tokens and wallets.
+4. **Run ML fraud detection** for advanced risk analysis.
+5. **Explore interactive charts and tables** for deeper insights.
+""")
+
+# --- Footer ---
+st.markdown('<hr style="border:1px solid #23262F; margin-top:2rem;">', unsafe_allow_html=True)
+st.markdown('<div style="text-align:center; color:#A3B3C2; font-size:0.95rem; margin-bottom:1.5rem;">DeFiIntel.ai &copy; 2024 &mdash; Open Source DeFi Fraud Detection Dashboard</div>', unsafe_allow_html=True)
+
 
 def main():
     # Header
@@ -60,7 +195,7 @@ def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.selectbox(
         "Choose Analysis Type",
-        ["🏠 Dashboard Overview", "👛 Wallet Analysis", "🪙 Token Analysis", "📊 Social Sentiment", "🤖 ML Predictions"]
+        ["🏠 Dashboard Overview", "👛 Wallet Analysis", "🪙 Token Analysis", "📊 Social Sentiment", "🤖 ML Predictions", "💬 AI Agent"]
     )
     
     # Sidebar info
@@ -87,115 +222,43 @@ def main():
         show_social_sentiment()
     elif page == "🤖 ML Predictions":
         show_ml_predictions()
+    elif page == "💬 AI Agent":
+        show_ai_agent()
 
 def show_dashboard_overview():
-    """Main dashboard with overview and quick analysis options"""
-    st.header("📊 Dashboard Overview")
-    
-    # Quick analysis section
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("🔍 Quick Wallet Analysis")
-        wallet_address = st.text_input(
-            "Enter Solana Wallet Address",
-            placeholder="4F3qMHdHHuDzxkeX282WQmZRcsjv6ATUThLKDbDHaubj",
-            key="quick_wallet"
-        )
-        
-        if st.button("Analyze Wallet", key="analyze_wallet_btn"):
-            if wallet_address:
-                with st.spinner("Analyzing wallet..."):
-                    try:
-                        # Get wallet transactions
-                        transactions = get_wallet_transactions(wallet_address, limit=50)
-                        
-                        if transactions:
-                            # Extract features
-                            wallet_features = extract_wallet_features(transactions)
-                            
-                            # Display results
-                            st.success("✅ Analysis Complete!")
-                            
-                            # Risk score
-                            risk_score = wallet_features.get('risk_score', 0)
-                            risk_color = "risk-high" if risk_score > 70 else "risk-medium" if risk_score > 30 else "risk-low"
-                            st.markdown(f'<p class="metric-card"><strong>Risk Score:</strong> <span class="{risk_color}">{risk_score:.1f}/100</span></p>', unsafe_allow_html=True)
-                            
-                            # Key metrics
-                            col1, col2, col3 = st.columns(3)
-                            with col1:
-                                st.metric("Total Transactions", wallet_features.get('total_transactions', 0))
-                            with col2:
-                                st.metric("Avg Daily Transactions", f"{wallet_features.get('avg_daily_transactions', 0):.1f}")
-                            with col3:
-                                st.metric("Rapid Transaction %", f"{wallet_features.get('rapid_transaction_ratio', 0)*100:.1f}%")
-                        else:
-                            st.error("No transactions found for this wallet")
-                    except Exception as e:
-                        st.error(f"Error analyzing wallet: {str(e)}")
-    
-    with col2:
-        st.subheader("🪙 Quick Token Analysis")
-        token_address = st.text_input(
-            "Enter Token Address (Solana)",
-            placeholder="So11111111111111111111111111111111111111112",
-            key="quick_token"
-        )
-        
-        if st.button("Analyze Token", key="analyze_token_btn"):
-            if token_address:
-                with st.spinner("Analyzing token..."):
-                    try:
-                        # Get token data
-                        token_data = get_token_data_solana(token_address)
-                        
-                        if token_data and 'data' in token_data:
-                            st.success("✅ Analysis Complete!")
-                            
-                            # Display token info
-                            token_info = token_data['data']['attributes']
-                            st.markdown(f"**Token Name:** {token_info.get('name', 'Unknown')}")
-                            st.markdown(f"**Symbol:** {token_info.get('symbol', 'Unknown')}")
-                            
-                            # Market data
-                            if 'price_usd' in token_info:
-                                st.metric("Price USD", f"${token_info['price_usd']:.6f}")
-                            
-                            if 'volume_24h' in token_info:
-                                st.metric("24h Volume", f"${token_info['volume_24h']:,.0f}")
-                        else:
-                            st.error("No token data found")
-                    except Exception as e:
-                        st.error(f"Error analyzing token: {str(e)}")
-    
-    # Recent activity section
-    st.markdown("---")
-    st.subheader("📈 Recent Activity")
-    
-    # Placeholder for recent analyses
-    st.info("💡 **Tip:** Use the sidebar navigation to perform detailed analysis of wallets, tokens, and social sentiment.")
-    
-    # System status
-    st.markdown("---")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("### 🔗 API Status")
-        st.success("✅ Helius API - Connected")
-        st.success("✅ Etherscan API - Connected")
-        st.warning("⚠️ Twitter API - Limited")
-    
-    with col2:
-        st.markdown("### 📊 Data Sources")
-        st.info("🌐 Solana Blockchain")
-        st.info("🌐 Ethereum Blockchain")
-        st.info("🐦 Twitter Social Data")
-    
-    with col3:
-        st.markdown("### 🤖 ML Models")
-        st.success("✅ Random Forest - Ready")
-        st.success("✅ Isolation Forest - Ready")
-        st.success("✅ Heuristic Rules - Active")
+    """Main dashboard with cyberpunk landing page"""
+    st.markdown('<h1 class="main-header">DeFiIntel.ai</h1>', unsafe_allow_html=True)
+    st.markdown('<div class="cyber-subtitle">The Next-Gen DeFi Fraud Detection & Analytics Platform</div>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align:center; max-width:700px; margin:0 auto 2.5rem auto; font-size:1.15rem; color:#e0e0e0;">DeFiIntel.ai leverages on-chain data, social sentiment, and machine learning to help you analyze, detect, and prevent fraud in the world of digital assets. Built for transparency, security, and insight—ready for the future of finance.</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="feature-row">', unsafe_allow_html=True)
+    st.markdown('''
+        <div class="feature-card">
+            <div class="feature-title">🔍 Multi-Chain Fraud Detection</div>
+            <div class="feature-desc">Analyze wallets and tokens across Solana & Ethereum. Spot suspicious activity, rug pulls, and honeypots in real time.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">📊 Advanced Analytics</div>
+            <div class="feature-desc">Interactive dashboards, risk scoring, and behavioral pattern recognition. Visualize trends and anomalies like a pro.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">🤖 AI & ML Engine</div>
+            <div class="feature-desc">Heuristic and machine learning models for fraud detection. Stay ahead of evolving threats with intelligent automation.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-title">🌐 Social Sentiment</div>
+            <div class="feature-desc">Monitor Twitter and social media for scam signals, manipulation, and community sentiment.</div>
+        </div>
+    ''', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div style="text-align:center; margin-top:2.5rem;">', unsafe_allow_html=True)
+    st.markdown('<button class="cta-btn" onclick="window.location.href = \"#\"">Get Started</button>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('---')
+    st.markdown('<div style="text-align:center; font-size:1.1rem; color:#ff00cc; margin-top:2rem;">Why DeFiIntel.ai?</div>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align:center; max-width:800px; margin:0 auto; color:#e0e0e0;">Built for transparency, security, and actionable insight. DeFiIntel.ai empowers users, researchers, and investors to make informed decisions in the fast-moving world of decentralized finance. <br><br> <b>Ready for the future of digital assets.</b></div>', unsafe_allow_html=True)
 
 def show_wallet_analysis():
     """Detailed wallet analysis page"""
@@ -659,6 +722,39 @@ def show_ml_predictions():
                     st.error(f"Error running ML analysis: {str(e)}")
         else:
             st.warning("Please enter a target address")
+
+def show_ai_agent():
+    st.header("💬 DeFiIntel AI Agent (Open-Source LLM)")
+    st.markdown("""
+    Ask anything about crypto, DeFi, wallets, tokens, scams, LLMs, or agents!
+    The agent can:
+    - Analyze wallets/tokens for fraud and risk
+    - Explain crypto concepts and LLM frameworks (like LangChain)
+    - Summarize price action and on-chain data
+    - Teach you about LLM agents and open-source models
+    """)
+
+    if 'llm_agent' not in st.session_state:
+        st.session_state.llm_agent = LLMDeFiAgent()
+    agent = st.session_state.llm_agent
+
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = []
+
+    # Chat UI
+    user_input = st.text_input("You:", "", key="ai_agent_input")
+    if st.button("Send", key="ai_agent_send") and user_input.strip():
+        st.session_state.chat_history.append(("user", user_input))
+        with st.spinner("Agent is thinking..."):
+            response = agent.chat(user_input)
+        st.session_state.chat_history.append(("agent", response))
+
+    # Display chat history
+    for role, msg in st.session_state.chat_history:
+        if role == "user":
+            st.markdown(f"**You:** {msg}")
+        else:
+            st.markdown(f"**Agent:** {msg}")
 
 if __name__ == "__main__":
     main() 
