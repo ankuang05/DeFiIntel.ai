@@ -1,9 +1,17 @@
 "use client";
+import { motion } from "framer-motion";
+
 export default function GetStartedPage() {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center bg-white px-4 py-24">
-      <h1 className="text-5xl md:text-6xl font-extrabold text-black text-center mb-4">Get Started</h1>
-      <p className="text-2xl font-semibold text-black text-center">Coming Soon.</p>
+    <div className="min-h-screen w-full flex items-center justify-center bg-white font-sans px-4" style={{ fontFamily: 'Inter, Geist, Segoe UI, Arial, sans-serif' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="text-4xl md:text-5xl font-extrabold text-black text-center"
+      >
+        Coming Soon
+      </motion.div>
     </div>
   );
 } 

@@ -287,14 +287,20 @@ function CoreFeatures() {
     {
       title: "Wallet Analysis",
       desc: "Thorough examination of wallet activities for suspicious patterns.",
+      img: "/demo/wallet-analysis.png",
+      alt: "Wallet Analysis Screenshot"
     },
     {
       title: "Token Analysis",
       desc: "In-depth scrutiny of token behavior and reliability.",
+      img: "/demo/token-analysis.png",
+      alt: "Token Analysis Screenshot"
     },
     {
       title: "Social Sentiment",
       desc: "Real-time monitoring of community sentiment and discussions.",
+      img: "/demo/social.png",
+      alt: "Social Sentiment Screenshot"
     },
   ];
   return (
@@ -318,9 +324,7 @@ function CoreFeatures() {
             className="flex flex-col md:flex-row bg-gray-50 rounded-2xl p-8 items-center md:items-stretch shadow-sm"
           >
             <div className="w-full md:w-1/2 flex items-center justify-center mb-6 md:mb-0">
-              <div className="w-full h-32 bg-gray-100 rounded-lg flex items-center justify-center">
-                <svg width="48" height="48" fill="none" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#E5E7EB"/><path d="M8 17h8M8 13h8M8 9h8" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/></svg>
-              </div>
+              <img src={f.img} alt={f.alt} className="w-full max-w-[320px] rounded-xl shadow-md object-contain bg-white" />
             </div>
             <div className="w-full md:w-1/2 flex flex-col justify-center md:pl-8">
               <h3 className="text-lg font-semibold text-black mb-1">{f.title}</h3>
@@ -377,7 +381,7 @@ function ExploreFeatures() {
             <p className="text-gray-500 font-light text-sm">{f.desc}</p>
           </motion.div>
         ))}
-      </div>
+        </div>
     </motion.section>
   );
 }
@@ -473,10 +477,19 @@ function FinalCTA() {
         <Link href="/get-started" className="inline-block px-6 py-3 rounded-lg bg-black text-white font-semibold text-base hover:bg-gray-800 transition">Get Started Now</Link>
       </div>
       <div className="w-full flex justify-center">
-        {/* Placeholder for product illustration */}
-        <div className="border-4 border-black rounded-2xl w-[420px] h-[180px] md:w-[520px] md:h-[220px] flex items-end justify-center relative bg-white">
-          <div className="absolute left-8 bottom-8 w-2/3 h-24 border-4 border-black rounded-xl"></div>
-          <div className="absolute right-8 bottom-4 w-1/4 h-32 border-4 border-black rounded-2xl"></div>
+        {/* Computer SVG illustration - more recognizable monitor design */}
+        <div className="border-4 border-black rounded-2xl w-[420px] h-[180px] md:w-[520px] md:h-[220px] flex items-center justify-center bg-white">
+          <svg width="180" height="120" viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Monitor screen */}
+            <rect x="20" y="15" width="140" height="70" rx="8" fill="#F3F4F6" stroke="#111" strokeWidth="4"/>
+            <rect x="32" y="27" width="116" height="46" rx="4" fill="#fff" stroke="#bbb" strokeWidth="1.5"/>
+            {/* Stand */}
+            <rect x="85" y="87" width="10" height="18" rx="3" fill="#bbb" />
+            {/* Base */}
+            <ellipse cx="90" cy="110" rx="28" ry="6" fill="#e5e7eb" stroke="#bbb" strokeWidth="1"/>
+            {/* Power button */}
+            <circle cx="90" cy="105" r="2" fill="#888" />
+          </svg>
         </div>
       </div>
     </motion.section>
@@ -528,7 +541,7 @@ function Footer() {
         </div>
       </div>
       <div className="text-center text-gray-400 font-light text-xs mt-8">© 2025. All rights reserved</div>
-    </footer>
+      </footer>
   );
 }
 

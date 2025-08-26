@@ -51,8 +51,10 @@ class WalletFeatureExtractor:
         # Transaction types
         if 'type' in df.columns:
             type_counts = df['type'].value_counts()
-            self.features['transfer_ratio'] = type_counts.get('TRANSFER', 0) / len(df)
-            self.features['swap_ratio'] = type_counts.get('SWAP', 0) / len(df)
+            transfer_count = type_counts.get('TRANSFER', 0) or 0
+            swap_count = type_counts.get('SWAP', 0) or 0
+            self.features['transfer_ratio'] = transfer_count / len(df) if len(df) > 0 else 0
+            self.features['swap_ratio'] = swap_count / len(df) if len(df) > 0 else 0
     
     def _extract_temporal_features(self, df: pd.DataFrame):
         """Extract time-based features."""
@@ -91,24 +93,35 @@ class WalletFeatureExtractor:
         if 'fee' not in df.columns:
             return
         
-        fees_series = pd.to_numeric(df['fee'], errors='coerce')
-        fees = fees_series.dropna()
-        
-        if len(fees) == 0:
-            return
-        
-        self.features['avg_fee'] = fees.mean()
-        self.features['fee_std'] = fees.std()
-        self.features['min_fee'] = fees.min()
-        self.features['max_fee'] = fees.max()
-        
-        # Fee volatility (coefficient of variation)
-        self.features['fee_volatility'] = fees.std() / fees.mean() if fees.mean() > 0 else 0
-        
-        # High fee transactions
-        fee_95th = fees.quantile(0.95)
-        high_fees = fees[fees > fee_95th]
-        self.features['high_fee_ratio'] = len(high_fees) / len(fees)
+        try:
+            fees_series = pd.to_numeric(df['fee'], errors='coerce')
+            fees = fees_series.dropna()
+            
+            if len(fees) == 0:
+                return
+            
+            self.features['avg_fee'] = float(fees.mean())
+            self.features['fee_std'] = float(fees.std())
+            self.features['min_fee'] = float(fees.min())
+            self.features['max_fee'] = float(fees.max())
+            
+            # Fee volatility (coefficient of variation)
+            mean_fee = float(fees.mean())
+            std_fee = float(fees.std())
+            self.features['fee_volatility'] = std_fee / mean_fee if mean_fee > 0 else 0
+            
+            # High fee transactions
+            fee_95th = float(fees.quantile(0.95))
+            high_fees = fees[fees > fee_95th]
+            self.features['high_fee_ratio'] = len(high_fees) / len(fees)
+        except Exception:
+            # If any error occurs, set default values
+            self.features['avg_fee'] = 0
+            self.features['fee_std'] = 0
+            self.features['min_fee'] = 0
+            self.features['max_fee'] = 0
+            self.features['fee_volatility'] = 0
+            self.features['high_fee_ratio'] = 0
     
     def _extract_behavioral_features(self, df: pd.DataFrame):
         """Extract behavioral pattern features."""
@@ -212,4 +225,4 @@ def extract_wallet_features(transactions: List[Dict]) -> Dict[str, float]:
         Dictionary of extracted features
     """
     extractor = WalletFeatureExtractor()
-    return extractor.extract_features(transactions) 
+    return extractor.extract_features(transactions)

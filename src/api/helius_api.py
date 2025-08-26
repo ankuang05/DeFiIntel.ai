@@ -1,10 +1,7 @@
-import os
 import requests
-from dotenv import load_dotenv
+from src.utils.config import CONFIG
 
-load_dotenv()
-
-API_KEY = os.getenv("HELIUS_API_KEY")
+API_KEY = CONFIG['HELIUS_API_KEY']
 BASE_URL = "https://api.helius.xyz/v0"
 
 def get_wallet_transactions(wallet_address, limit=10):

@@ -22,3 +22,4 @@ print(get_token_transfers(token_eth))
 
 print("\n Twitter (keyword = 'bonk'):")
 print(search_tweets("bonk"))
+
