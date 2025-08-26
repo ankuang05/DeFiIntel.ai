@@ -1,8 +1,42 @@
+# Virtual environment
 .venv/
+venv/
+env/
+
+# Data and notebooks
 data/
 notebooks/*.ipynb_checkpoints/
 notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Python cache
 __pycache__/
 *.pyc
-*.ipynb_checkpoints/
-.ipynb_checkpoints/.env
+*.pyo
+*.pyd
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# API keys and secrets
+secrets.json
+config.json
+keys.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

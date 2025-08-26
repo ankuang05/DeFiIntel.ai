@@ -2,104 +2,140 @@
 
 **DeFiIntel.ai** is an open-source, modular analytics and intelligence platform for detecting fraud, scams, and suspicious activity in the cryptocurrency and DeFi space. It leverages on-chain data, social sentiment, and machine learning to help users, researchers, and developers analyze memecoins, wallets, and token launches across multiple blockchains.
 
-## Features
-- **Multi-Source Data Integration:**
-  - Solana (Helius API) - Wallet transactions and behavior
-  - Ethereum (Etherscan API) - Token transfers and patterns
-  - GeckoTerminal (Solana token stats) - Price and market data
-  - Twitter (social sentiment) - Social media analysis
-  - (Planned) RugDoc and other scam label sources
-- **Fraud Detection Engine:**
-  - Wallet behavior analysis (rapid transactions, night activity, fee patterns)
-  - Token transfer analysis (value concentration, address diversity, temporal patterns)
-  - Social sentiment analysis (manipulation detection, volume analysis)
-  - Heuristic-based detection (rule-based fraud indicators)
-  - Machine learning models (Random Forest, Isolation Forest)
-- **Feature Engineering:**
-  - Automated feature extraction from transaction data
-  - Risk scoring algorithms
-  - Behavioral pattern recognition
-- **Modular Architecture:**
-  - Reusable API wrappers
-  - Extensible detection methods
-  - Ready for dashboard and AI agent integration
-- **Interactive Dashboard:**
-  - Streamlit web interface for real-time analysis
-  - Interactive visualizations with Plotly
-  - Multi-page navigation (wallet, token, sentiment, ML)
-  - Risk scoring and pattern detection visualization
+## 🚀 Features
 
-## Project Structure
+- **🔍 Multi-Chain Analysis**: Support for Solana and Ethereum with extensible architecture
+- **📊 Real-Time Analytics**: Live data from Helius, Etherscan, GeckoTerminal, and Twitter APIs
+- **🤖 Machine Learning**: Advanced fraud detection using Random Forest and Isolation Forest models
+- **📈 Interactive Dashboard**: Modern Streamlit interface with real-time visualizations
+- **🎯 Risk Scoring**: Comprehensive risk assessment with multiple indicators
+- **🔧 Modular Design**: Easy to extend with new blockchains and data sources
+
+## 🏗️ Architecture
+
 ```
 defiintel-ai/
+├── app/                 # Streamlit dashboard application
+├── frontend/            # Next.js marketing website
 ├── src/
-│   ├── api/           # API wrappers (helius, etherscan, coingecko, etc.)
-│   ├── features/       # Feature engineering scripts
-│   ├── models/         # ML models and heuristics
-│   ├── agent/          # AI agent (planned for future release)
-│   └── utils/          # Config and helpers
-├── app/                # Streamlit/FastAPI frontend
-├── data/               # Datasets (not tracked by git)
-├── notebooks/          # Jupyter notebooks for EDA and prototyping
-├── test_api.py         # Script to test all API integrations
-├── requirements.txt    # Python dependencies
-├── .env                # API keys (not tracked by git)
-├── .gitignore          # Files/folders to ignore
-└── README.md           # Project documentation
+│   ├── api/            # API integrations (Helius, Etherscan, etc.)
+│   ├── features/       # Feature engineering modules
+│   ├── models/         # Machine learning models
+│   └── utils/          # Configuration and utilities
+├── data/               # Data storage and caching
+├── notebooks/          # Jupyter notebooks for analysis
+└── tests/              # Test suites and validation
 ```
 
-## Setup Instructions
-1. **Clone the repository:**
-   ```sh
-   git clone https://github.com/ankuang05/DeFiIntel.ai.git
-   cd DeFiIntel.ai
-   ```
-2. **Create and activate a virtual environment:**
-   ```sh
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-3. **Install dependencies:**
-   ```sh
-   pip install -r requirements.txt
-   ```
-4. **Set up your `.env` file:**
-   Create a `.env` file in the project root with the following content:
-   ```env
-   HELIUS_API_KEY=your_helius_api_key_here
-   ETHERSCAN_API_KEY=your_etherscan_api_key_here
-   TWITTER_BEARER_TOKEN=your_twitter_bearer_token_here
-   ```
-   - Get your API keys from [Helius](https://www.helius.xyz), [Etherscan](https://etherscan.io/myapikey), and [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard).
+## 🛠️ Quick Start
 
-## Usage
-- Test all API integrations:
-  ```sh
-  python test_api.py
-  ```
-- Run the interactive dashboard:
-  ```sh
-  pip install -r app/requirements.txt
-  python app/run_dashboard.py
-  ```
-- Explore and analyze data in Jupyter notebooks (see `notebooks/`)
-- Test fraud detection pipeline:
-  ```sh
-  python test_fraud_detection.py
-  ```
-- Extend with new APIs, features, or models as needed
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- API keys for Helius, Etherscan, and Twitter
 
-## Roadmap
-- [x] Phase 1: Project setup & API integration
-- [x] Phase 2: Exploratory Data Analysis (EDA) & feature engineering
-- [x] Phase 3: Scam/fraud detection logic (heuristics & ML)
-- [x] Phase 4: Streamlit/FastAPI dashboard
-- [ ] Phase 5: LLM-powered chatbot/agent (planned for future release)
-- [ ] Phase 6: Documentation, deployment, and demo
+### Installation
 
-## Contributing
-Pull requests and suggestions are welcome! For major changes, please open an issue first to discuss what you would like to change.
+```bash
+# Clone the repository
+git clone https://github.com/ankuang05/DeFiIntel.ai.git
+cd DeFiIntel.ai
 
-## AI Agent Status
-The LLM-powered DeFi intelligence agent is planned for a future release. Public LLM APIs require payment for production use, making it infeasible for an open-source project to provide free access to all users. The current focus is on the powerful fraud detection features that are already working and ready for public use.
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install frontend dependencies
+cd frontend
+npm install
+cd ..
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API keys
+```
+
+### Running the Dashboard
+
+```bash
+# Start the Streamlit dashboard
+streamlit run app/streamlit_app.py
+
+# Or use the launcher script
+python app/run_dashboard.py
+```
+
+### Running the Frontend
+
+```bash
+# Start the Next.js frontend
+cd frontend
+npm run dev
+```
+
+## 📊 Dashboard Features
+
+### Wallet Analysis
+- Transaction pattern analysis
+- Risk scoring and visualization
+- Behavioral anomaly detection
+- Fee distribution analysis
+
+### Token Analysis
+- Market data integration
+- Transfer pattern analysis
+- Price and volume charts
+- Token metrics dashboard
+
+### Social Sentiment
+- Twitter sentiment analysis
+- Keyword monitoring
+- Sentiment visualization
+- Real-time social data
+
+### Machine Learning Predictions
+- Fraud risk scoring
+- Multiple model types (Random Forest, Isolation Forest)
+- Feature importance analysis
+- Confidence metrics
+
+## 🔧 Development Roadmap
+
+- [x] Phase 1: Core API integrations (Helius, Etherscan, Twitter)
+- [x] Phase 2: Feature engineering and data processing
+- [x] Phase 3: Machine learning models and risk scoring
+- [x] Phase 4: Interactive dashboard and visualizations
+- [x] Phase 5: Advanced analytics and reporting features
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines for details on:
+- Code style and standards
+- Testing requirements
+- Pull request process
+- Issue reporting
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Helius for Solana blockchain data
+- Etherscan for Ethereum blockchain data
+- GeckoTerminal for market data
+- Twitter for social sentiment data
+
+## 📞 Contact
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/ankuang05/DeFiIntel.ai/issues)
+- **Discussions**: [Join community discussions](https://github.com/ankuang05/DeFiIntel.ai/discussions)
+- **Project**: [View project on GitHub](https://github.com/ankuang05/DeFiIntel.ai)
+
+## ⭐ Star History
+
+If you find this project helpful, please consider giving it a star! ⭐
+
+---
+
+**Built with ❤️ by the DeFiIntel.ai community**
 
