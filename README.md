@@ -4,11 +4,11 @@
 
 ## Features
 
-- ** Multi-Chain Analysis**: Support for Solana and Ethereum with extensible architecture
-- ** Machine Learning**: Fraud detection using Random Forest and Isolation Forest models
-- ** Interactive Dashboard**: Modern Streamlit interface with accurate visualizations
-- ** Risk Scoring**: Comprehensive risk assessment with multiple indicators
-- ** Modular Design**: Easy to extend with new blockchains and data sources
+- **Multi-Chain Analysis**: Support for Solana and Ethereum with extensible architecture
+- **Machine Learning**: Fraud detection using Random Forest and Isolation Forest models
+- **Interactive Dashboard**: Modern Streamlit interface with accurate visualizations
+- **Risk Scoring**: Comprehensive risk assessment with multiple indicators
+- **Modular Design**: Easy to extend with new blockchains and data sources
 
 ## Architecture
 
