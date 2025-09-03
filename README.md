@@ -1,17 +1,16 @@
 # DeFiIntel.ai
 
-**DeFiIntel.ai** is an open-source, modular analytics and intelligence platform for detecting fraud, scams, and suspicious activity in the cryptocurrency and DeFi space. It leverages on-chain data, social sentiment, and machine learning to help users, researchers, and developers analyze memecoins, wallets, and token launches across multiple blockchains.
+**DeFiIntel.ai** is an open-source, analytics platform for detecting fraud, scams, and suspicious activity in the cryptocurrency and DeFi space. It uses on-chain data, social sentiment, and machine learning to help users, researchers, and developers analyze digitial assets, wallets, and token launches across multiple blockchains.
 
-## 🚀 Features
+## Features
 
-- **🔍 Multi-Chain Analysis**: Support for Solana and Ethereum with extensible architecture
-- **📊 Real-Time Analytics**: Live data from Helius, Etherscan, GeckoTerminal, and Twitter APIs
-- **🤖 Machine Learning**: Advanced fraud detection using Random Forest and Isolation Forest models
-- **📈 Interactive Dashboard**: Modern Streamlit interface with real-time visualizations
-- **🎯 Risk Scoring**: Comprehensive risk assessment with multiple indicators
-- **🔧 Modular Design**: Easy to extend with new blockchains and data sources
+- ** Multi-Chain Analysis**: Support for Solana and Ethereum with extensible architecture
+- ** Machine Learning**: Fraud detection using Random Forest and Isolation Forest models
+- ** Interactive Dashboard**: Modern Streamlit interface with accurate visualizations
+- ** Risk Scoring**: Comprehensive risk assessment with multiple indicators
+- ** Modular Design**: Easy to extend with new blockchains and data sources
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 defiintel-ai/
@@ -27,7 +26,7 @@ defiintel-ai/
 └── tests/              # Test suites and validation
 ```
 
-## 🛠️ Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -72,7 +71,7 @@ cd frontend
 npm run dev
 ```
 
-## 📊 Dashboard Features
+## Dashboard Features
 
 ### Wallet Analysis
 - Transaction pattern analysis
@@ -90,7 +89,6 @@ npm run dev
 - Twitter sentiment analysis
 - Keyword monitoring
 - Sentiment visualization
-- Real-time social data
 
 ### Machine Learning Predictions
 - Fraud risk scoring
@@ -98,44 +96,10 @@ npm run dev
 - Feature importance analysis
 - Confidence metrics
 
-## 🔧 Development Roadmap
+## Development Roadmap
 
 - [x] Phase 1: Core API integrations (Helius, Etherscan, Twitter)
-- [x] Phase 2: Feature engineering and data processing
-- [x] Phase 3: Machine learning models and risk scoring
-- [x] Phase 4: Interactive dashboard and visualizations
-- [x] Phase 5: Advanced analytics and reporting features
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our contributing guidelines for details on:
-- Code style and standards
-- Testing requirements
-- Pull request process
-- Issue reporting
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Helius for Solana blockchain data
-- Etherscan for Ethereum blockchain data
-- GeckoTerminal for market data
-- Twitter for social sentiment data
-
-## 📞 Contact
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/ankuang05/DeFiIntel.ai/issues)
-- **Discussions**: [Join community discussions](https://github.com/ankuang05/DeFiIntel.ai/discussions)
-- **Project**: [View project on GitHub](https://github.com/ankuang05/DeFiIntel.ai)
-
-## ⭐ Star History
-
-If you find this project helpful, please consider giving it a star! ⭐
-
----
-
-**Built with ❤️ by the DeFiIntel.ai community**
-
+- [x] Phase 2: EDA
+- [x] Phase 3: Feature engineering and data processing
+- [x] Phase 4: Machine learning models and risk scoring
+- [x] Phase 5: Interactive dashboard and visualizations
